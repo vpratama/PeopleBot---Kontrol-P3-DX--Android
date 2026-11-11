@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Latar sengaja transparan agar logo fleksibel pada splash dan ikon aplikasi. -->
+  <defs>
+    <linearGradient id="shell" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#B8E4DF"/>
+      <stop offset="1" stop-color="#BFC9F2"/>
+    </linearGradient>
+    <linearGradient id="pad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8C9C3"/>
+      <stop offset="1" stop-color="#E7BDE0"/>
+    </linearGradient>
+  </defs>
+  <!-- Antena kecil memberi siluet robot yang mudah dikenali. -->
+  <path d="M512 114v90" fill="none" stroke="#657C91" stroke-width="34" stroke-linecap="round"/>
+  <circle cx="512" cy="100" r="48" fill="#F4D28C" stroke="#657C91" stroke-width="22"/>
+  <!-- Kepala robot dengan panel wajah membulat dan aksen telinga. -->
+  <path d="M284 258c0-70 57-127 127-127h202c70 0 127 57 127 127v273c0 84-68 152-152 152H436c-84 0-152-68-152-152z" fill="url(#shell)" stroke="#657C91" stroke-width="30" stroke-linejoin="round"/>
+  <path d="M284 362h-52c-35 0-63 28-63 63v90c0 35 28 63 63 63h52M740 362h52c35 0 63 28 63 63v90c0 35-28 63-63 63h-52" fill="none" stroke="#657C91" stroke-width="30" stroke-linecap="round"/>
+  <rect x="343" y="270" width="338" height="294" rx="112" fill="#F8F7F2" stroke="#8293A2" stroke-width="16"/>
+  <!-- Mata dan senyum sederhana membuat maskot terasa ramah. -->
+  <circle cx="433" cy="388" r="28" fill="#657C91"/>
+  <circle cx="591" cy="388" r="28" fill="#657C91"/>
+  <path d="M430 466c42 49 122 49 164 0" fill="none" stroke="#D99B9B" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="373" cy="470" r="18" fill="#F3B8B3" opacity=".75"/>
+  <circle cx="651" cy="470" r="18" fill="#F3B8B3" opacity=".75"/>
+  <!-- Bentuk gamepad menjadi badan robot; tombol pastel membedakan kedua sisi. -->
+  <path d="M332 656c35-48 72-72 126-72h108c54 0 91 24 126 72l87 120c31 43 17 102-27 123-31 15-68 7-91-17l-72-73H435l-72 73c-23 24-60 32-91 17-44-21-58-80-27-123z" fill="url(#pad)" stroke="#657C91" stroke-width="30" stroke-linejoin="round"/>
+  <!-- D-pad kiri. -->
+  <path d="M390 743h116v38h-39v39h-38v-39h-39z" fill="#F8F7F2" stroke="#657C91" stroke-width="12" stroke-linejoin="round"/>
+  <!-- Tombol aksi kanan. -->
+  <circle cx="632" cy="746" r="25" fill="#A9D9C8" stroke="#657C91" stroke-width="11"/>
+  <circle cx="690" cy="790" r="25" fill="#F3D08A" stroke="#657C91" stroke-width="11"/>
+  <circle cx="574" cy="790" r="25" fill="#B9C8F0" stroke="#657C91" stroke-width="11"/>
+  <circle cx="632" cy="834" r="25" fill="#F8F7F2" stroke="#657C91" stroke-width="11"/>
+  <!-- Lampu status kecil menyatukan tema robot dan kendali. -->
+  <circle cx="474" cy="650" r="11" fill="#FFFDF8"/>
+  <circle cx="512" cy="650" r="11" fill="#FFFDF8"/>
+  <circle cx="550" cy="650" r="11" fill="#FFFDF8"/>
+</svg>
