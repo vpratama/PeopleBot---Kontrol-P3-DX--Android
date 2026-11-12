@@ -61,7 +61,8 @@ class ControlPanel extends StatelessWidget {
         const Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            'Joystick / Gamepad: drive  |  release: stop',
+            'Controller: D-pad / left stick = drive; release = stop\n'
+            'X/Y/B/A = speed 100/200/300/400',
             style: TextStyle(fontSize: 9),
           ),
         ),

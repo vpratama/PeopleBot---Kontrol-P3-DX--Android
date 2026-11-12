@@ -15,7 +15,7 @@ class DashboardViewModel extends ChangeNotifier {
       notifyListeners();
     };
     gamepad.onStatus = addLog;
-    gamepad.onSpeed = setSpeed;
+    gamepad.onSpeed = _setControllerSpeed;
     gamepad.onCommand = (left, right) => publish(RobotCommand(left, right));
     gamepad.start();
     if (autoConnect) io.connect(config);
@@ -43,7 +43,14 @@ class DashboardViewModel extends ChangeNotifier {
   }
 
   void setSpeed(int value) {
-    speed = value;
+    speed = value.clamp(0, 400).toInt();
+    gamepad.setSpeed(speed);
+    notifyListeners();
+  }
+
+  // The gamepad service has already selected this speed before notifying us.
+  void _setControllerSpeed(int value) {
+    speed = value.clamp(0, 400).toInt();
     notifyListeners();
   }
 

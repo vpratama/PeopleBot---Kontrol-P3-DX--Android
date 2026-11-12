@@ -19,12 +19,20 @@ class RobotIoService {
   void Function(String)? onStatus;
   void Function(List<int>)? onSensorData;
 
-  // Hubungkan MQTT, mulai berlangganan sensor, lalu aktifkan koneksi STOMP.
+  // Hubungkan Web STOMP terlebih dahulu, lalu mulai koneksi MQTT setelah berhasil.
   Future<void> connect(AppConfig config) async {
-    if (disposed || connecting) return;
+    if (disposed || stompStarted) return;
     lastConfig = config;
+    stompStarted = true;
+    onStatus?.call('Connecting to Web STOMP...');
+    _connectStomp(config);
+  }
+
+  Future<void> _connectMqtt(AppConfig config) async {
+    if (disposed || connecting || stomp?.connected != true) return;
+    if (mqtt?.connectionStatus?.state == MqttConnectionState.connected) return;
     connecting = true;
-    onStatus?.call('Connecting to MQTT WebSocket and Web STOMP...');
+    onStatus?.call('Web STOMP connected; connecting to MQTT WebSocket...');
     final client =
         MqttServerClient.withPort(
             config.mqttHost,
@@ -32,7 +40,8 @@ class RobotIoService {
             config.brokerPort,
           )
           ..keepAlivePeriod = 60
-          ..useWebSocket = true;
+          ..useWebSocket = true
+          ..websocketProtocols = MqttClientConstants.protocolsSingleDefault;
     client.onDisconnected = () {
       if (!disposed) {
         onStatus?.call('MQTT disconnected; retrying...');
@@ -80,16 +89,15 @@ class RobotIoService {
       }
     }
     connecting = false;
-    if (!stompStarted) {
-      stompStarted = true;
-      _connectStomp(config);
-    }
   }
 
   // Jadwalkan percobaan ulang tunggal setelah koneksi terputus.
   void scheduleRetry() {
     if (disposed || lastConfig == null || retryTimer?.isActive == true) return;
-    retryTimer = Timer(const Duration(seconds: 5), () => connect(lastConfig!));
+    retryTimer = Timer(
+      const Duration(seconds: 5),
+      () => _connectMqtt(lastConfig!),
+    );
   }
 
   // Siapkan koneksi Web STOMP dengan kredensial dan pemulihan otomatis.
@@ -104,7 +112,10 @@ class RobotIoService {
           'passcode': config.password,
           'host': '/',
         },
-        onConnect: (_) => onStatus?.call('Web STOMP connected'),
+        onConnect: (_) {
+          onStatus?.call('Web STOMP connected');
+          _connectMqtt(config);
+        },
         onStompError: (frame) =>
             onStatus?.call('Web STOMP error: ${frame.body ?? frame.headers}'),
         onWebSocketError: (error) =>
